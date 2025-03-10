@@ -1,4 +1,4 @@
-package HW12;
+package HW12.Q2;
 
 import java.util.Scanner;
 
@@ -12,7 +12,7 @@ public class NegativeNumberException extends Exception {
 
     static void add (int number) throws NegativeNumberException {
         if (number >= 0) {
-            System.out.println(number);
+            System.out.println("your number: " + number);
         }
         else {
             throw new NegativeNumberException("negative number");
