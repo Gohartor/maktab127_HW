@@ -1,7 +1,9 @@
 package HW11.Q2;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 class Box<T> {
     private T item;
@@ -49,6 +51,14 @@ class GenericTest {
          var intBox1 = intBox.getItem();
          Object intBox2 = intBox.getItem();
 
+
+         Map<String, List<String>> listMap = new HashMap<String, List<String>>();
+         var listMap2 = new HashMap<String, List<String>>();
+
+         //golang
+         //listMap3 := new HashMap<String, List<String>>();
+
+         //var keyword hast --> baraye datatype estefade mishavad
     }
 }
 

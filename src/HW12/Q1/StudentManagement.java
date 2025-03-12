@@ -60,7 +60,38 @@ class StudentManagement {
     public List<Student> findTopStudents() {
 
         List<Student> sortedList = new ArrayList<>(students.values());
+
+        /*
+        ***** 01) interface comparator *****
         sortedList.sort(new StudentScoreComparator());
+        */
+
+        /*
+        ***** 02) lambda simple *****
+        sortedList.sort((o1, o2) -> o1.getScore() - o2.getScore());
+        */
+
+        // ***** 03) lambda *****
+        //sortedList.sort(Comparator.comparingInt(Student::getScore));  soodi mishe
+        sortedList.sort(Comparator.comparingInt(Student::getScore).reversed());
+
+
+        /*
+        ***** 04) lambda old java
+        sortedList.sort(Comparator.comparingInt(s -> s.getScore()));
+        */
+
+
+        /*
+        ***** 05) anonymous class for interface *****
+        sortedList.sort(new Comparator<>() {
+            @Override
+            public int compare(Student o1, Student o2) {
+                return 0;
+            }
+        });
+        */
+
         return sortedList.subList(0, 2);
     }
 

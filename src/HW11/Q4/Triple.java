@@ -36,11 +36,11 @@ public class Triple<T1, T2, T3 extends Number> {
     }
 
     public double sum() {
-        if (first instanceof Number n1 && third instanceof Number n3) {
-            return n1.doubleValue() + n3.doubleValue();
-        } else {
-            return 0;
+        if (first instanceof Number n1) {
+            return n1.doubleValue() + third.doubleValue();
         }
+            return 0;
+
     }
 
 

@@ -5,15 +5,13 @@ import java.util.HashMap;
 public class MultiTypeHashMap<K> extends HashMap<K, Object> {
 
     public <V> V get(K key, Class<V> valueType) {
-
         var value = super.get(key);
-
         if (valueType.isInstance(value)) {
 //            return (value)valueType;  ----->  in model cast eshtebah ast
             return valueType.cast(value);
-        } else {
-            return null;
         }
+            return null;
+
     }
 
 
