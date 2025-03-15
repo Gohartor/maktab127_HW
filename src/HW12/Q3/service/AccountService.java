@@ -30,21 +30,21 @@ public class AccountService {
     }
 
     public void withdraw(String cardNumber, double amount) {
-        Account currentAccount = accountRepository.findByCardName(cardNumber);
+        Account currentAccount = accountRepository.findByCardNumber(cardNumber);
         if (currentAccount == null) {
             throw new NullPointerException("account not found");
-        }
-        if (amount <= 0){
+        } else if (amount <= 0){
             throw new InvalidAmountException("negative or zero amount");
-        }
-        if (currentAccount.getBalance() < amount) {
+        } else if (currentAccount.getBalance() < amount) {
             throw new InsufficientFundsException("your balance not enough");
+        } else {
+            currentAccount.setBalance(currentAccount.getBalance() - amount);
         }
     }
 
 
     public void deposit(String cardNumber, double amount) {
-        Account currentAccount = accountRepository.findByCardName(cardNumber);
+        Account currentAccount = accountRepository.findByCardNumber(cardNumber);
         if (currentAccount == null) {
             throw new NullPointerException("account not found");
         } else if (amount <= 0) {
@@ -55,35 +55,37 @@ public class AccountService {
     }
 
     public boolean transfer (String from, String to, double amount) {
-        Account fromAccount = accountRepository.findByCardName(from);
-        Account toAccount = accountRepository.findByCardName(to);
+        Account fromAccount = accountRepository.findByCardNumber(from);
+        Account toAccount = accountRepository.findByCardNumber(to);
         if (fromAccount == null || toAccount == null) {
             return false;
         } else if (fromAccount.getBalance() < amount) {
             throw new InsufficientFundsException("your balance not enough");
         } else {
-            deposit(fromAccount.getCardNumber(), amount);
-            withdraw(toAccount.getCardNumber(), amount);
+            withdraw(fromAccount.getCardNumber(), amount);
+            deposit(toAccount.getCardNumber(), amount);
             return true;
         }
     }
 
-    public Double checkBalance(String cardNumber) {
-        Account currentAccount = accountRepository.findByCardName(cardNumber);
+    public void checkBalance(String cardNumber) {
+        Account currentAccount = accountRepository.findByCardNumber(cardNumber);
         if (currentAccount == null) {
             throw new NullPointerException("account not found");
         } else{
-            return currentAccount.getBalance();
+            System.out.println(currentAccount.getBalance());
         }
     }
 
     public boolean resetPin(String cardNumber, Integer pin) {
-        Account currentAccount = accountRepository.findByCardName(cardNumber);
+        Account currentAccount = accountRepository.findByCardNumber(cardNumber);
         if (currentAccount == null) {
             throw new NullPointerException("account not found");
         } else if (pin <= 0) {
-
+            throw new InvalidAmountException("negative or zero amount");
+        } else {
+            currentAccount.setPin(pin);
         }
-        return false;
+        return true;
     }
 }

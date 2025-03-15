@@ -35,12 +35,18 @@ public class AccountRepository {
     }
 
 
-    public Account findByCardName (String cardName) {
+    public Account findByCardNumber (String cardNumber) {
         for (Account account : accounts) {
-            if (account.getName().equals(cardName)) {
+            if (account.getCardNumber().equals(cardNumber)) {
                 return account;
             }
         }
         return null;
+    }
+
+    public void printAll(){
+        for (Account account : accounts) {
+            System.out.println(account);
+        }
     }
 }
