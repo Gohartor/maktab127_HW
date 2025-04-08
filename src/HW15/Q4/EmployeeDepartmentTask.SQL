@@ -39,7 +39,7 @@ create table tasks
     start_date  date,
     end_date    date,
     due_date    date,
-    status      varchar(20) check (status in ('todo', 'in_progress', 'done'))
+    status      varchar(20) check (tasks.status in ('todo', 'in_progress', 'done'))
 );
 
 create table archived
