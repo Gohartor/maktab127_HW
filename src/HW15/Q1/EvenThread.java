@@ -14,8 +14,6 @@ public class EvenThread extends Thread {
     public void run() {
         for (int i = 0; i <= n; i += 2) {
             list.addNumber(i, false);
-            System.out.println(Thread.currentThread().getName() + " " + i);
-
         }
     }
 }

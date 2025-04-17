@@ -17,6 +17,7 @@ public class NumberList {
         }
 
         numbers.add(num);
+        System.out.println(Thread.currentThread().getName() + " -> " + num);
         isOddTurn = !isOddTurn;
         notify();
     }
@@ -24,9 +25,5 @@ public class NumberList {
 
     public void printAll() {
         System.out.println(Arrays.toString(numbers.toArray()));
-//        if (numbers.isEmpty()) {
-//            System.out.println("numberList is empty");
-//        }
-//       numbers.forEach(System.out::print);
     }
 }

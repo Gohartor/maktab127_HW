@@ -13,7 +13,6 @@ public class OddThread implements Runnable {
     public void run() {
         for (int i = 1; i <= n; i += 2) {
             list.addNumber(i, true);
-            System.out.println(Thread.currentThread().getName() + " " + i);
         }
     }
 }
