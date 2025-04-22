@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class CardService {
-
     private final CardRepository cardRepository;
 
+    //dto upper layer entity
     public CardService() {
         this.cardRepository = ApplicationContext.getInstance().getCardRepository();
     }
@@ -39,6 +39,8 @@ public class CardService {
         return cardRepository.create(card);
     }
 
+    //delete by card number
+    //show all card and delete
     public void deleteCard(Integer cardId) {
         if (!cardRepository.existsById(cardId)) {
             throw new RuntimeException("card with this ID does not exist.");

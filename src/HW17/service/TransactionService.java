@@ -26,6 +26,7 @@ public class TransactionService {
         Optional<Card> sourceCard = cardRepository.findByCardNumber(sourceCardNumber);
         Optional<Card> destinationCard = cardRepository.findByCardNumber(destinationCardNumber);
 
+        //separate exception
         if (sourceCard.isEmpty() || destinationCard.isEmpty()) {
             throw new RuntimeException("invalid card number");
         }
@@ -33,12 +34,12 @@ public class TransactionService {
         if (sourceCard.get().getBalance() < amount) {
             throw new RuntimeException("not enough balance");
         }
-
+        //enum failed for this
         if (amount > 15000000) {
             throw new RuntimeException("transfer limit is 15 million tomans");
         }
 
-        double transactionFee = calculateNormalTransferFee(sourceCardNumber, destinationCardNumber, amount);
+        double transactionFee = calculateNormalTransferFee(amount);
 
         sourceCard.get().setBalance(sourceCard.get().getBalance() - amount - transactionFee);
         cardRepository.update(sourceCard.get());
@@ -60,10 +61,9 @@ public class TransactionService {
         return transaction;
     }
 
-    private double calculateNormalTransferFee(String sourceCardNumber, String destinationCardNumber, double amount) {
-        if (sourceCardNumber.substring(0, 6).equals(destinationCardNumber.substring(0, 6))) {
-            return 0;
-        } else if (amount <= 10000000) {
+    //bank name equals is inner network
+    private double calculateNormalTransferFee(double amount) {
+        if (amount <= 10000000) {
             return 720;
         } else {
             return 1000 + (amount - 10000000) / 1000000 * 100;
@@ -88,7 +88,8 @@ public class TransactionService {
 
         double transactionFee = amount * 0.001;
 
-
+        //cardRepository -> cardService
+        //update method in cardService
         sourceCard.get().setBalance(sourceCard.get().getBalance() - amount - transactionFee);
         cardRepository.update(sourceCard.get());
 
@@ -114,14 +115,10 @@ public class TransactionService {
         for (Transaction transaction : transactions) {
             Optional<Card> sourceCard = cardRepository.findByCardNumber(transaction.getSourceCardNumber());
             Optional<Card> destinationCard = cardRepository.findByCardNumber(transaction.getDestinationCardNumber());
+            //paya individual , transaction type in parameter
 
-            if (sourceCard.isEmpty() || destinationCard.isEmpty()) {
-                throw new RuntimeException("invalid card number");
-            }
-
-            if (sourceCard.get().getBalance() < transaction.getAmount()) {
-                throw new RuntimeException("not enough balance");
-            }
+            //method for another
+            validation(transaction, sourceCard, destinationCard);
 
             if (transaction.getAmount() > 50000000) {
                 throw new RuntimeException("transfer limit is 15 million tomans");
@@ -148,6 +145,16 @@ public class TransactionService {
 
 
         return transactions;
+    }
+
+    private static void validation(Transaction transaction, Optional<Card> sourceCard, Optional<Card> destinationCard) {
+        if (sourceCard.isEmpty() || destinationCard.isEmpty()) {
+            throw new RuntimeException("invalid card number");
+        }
+
+        if (sourceCard.get().getBalance() < transaction.getAmount()) {
+            throw new RuntimeException("not enough balance");
+        }
     }
 
     private double calculatePayaBatchFee(int transactionCount) {

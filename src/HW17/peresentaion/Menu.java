@@ -211,13 +211,14 @@ public class Menu {
 
         try {
             YearMonth expireDate = YearMonth.parse(expireDateString, FORMATTER);
-
+            //search DTO
             Card card = new Card();
             card.setCardNumber(cardNumber);
             card.setBankName(bankName);
             card.setExpireDate(expireDate);
             card.setCvv2(cvv2);
-            card.setBalance(0.0);
+            card.setBalance(1000000000.0);
+            card.setUser(currentUser);
 
             Card registeredCard = cardService.registerCard(card);
             System.out.println("card registered successfully. card ID: " + registeredCard.getId());
@@ -350,8 +351,4 @@ public class Menu {
         System.out.println("exiting...");
     }
 
-    public static void main(String[] args) {
-        Menu menu = new Menu();
-        menu.run();
-    }
 }

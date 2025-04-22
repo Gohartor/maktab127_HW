@@ -17,9 +17,11 @@ import java.time.LocalDateTime;
 @Builder
 public class Transaction extends BaseEntity {
 
+    //card in entity -> source and destination
     private String sourceCardNumber;
     private String destinationCardNumber;
     private Double amount;
+    //remove "transaction" from fields
     private Double transactionFee;
     private LocalDateTime transactionTimestamp;
     private TransactionType transactionType;

@@ -65,6 +65,7 @@ public class UserRepositoryImp extends CrudRepositoryImp<User, Integer> implemen
             return user;
         } catch (SQLException e) {
             throw new RuntimeException(e);
+            //tip: custom exception -or- throw e;
         }
     }
 

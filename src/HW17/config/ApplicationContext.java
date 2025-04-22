@@ -64,6 +64,7 @@ public class ApplicationContext {
     }
 
 
+    //handell in SQL (if not exists)
     private boolean isTableExists(Connection connection, String tableName) throws SQLException {
         DatabaseMetaData metaData = connection.getMetaData();
         try (ResultSet tables = metaData.getTables(null, null, tableName, null)) {

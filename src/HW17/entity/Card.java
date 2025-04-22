@@ -7,7 +7,7 @@ import java.time.YearMonth;
 
 @Setter
 @Getter
-@ToString
+@ToString //include and exclude
 @NoArgsConstructor
 @AllArgsConstructor
 public class Card extends BaseEntity {

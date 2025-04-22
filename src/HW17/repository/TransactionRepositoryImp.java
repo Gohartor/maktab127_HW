@@ -31,8 +31,8 @@ public class TransactionRepositoryImp
 
     @Override
     protected List<String> getInsertColumns() {
-        return List.of("source_card_number", "destination_card_number", "amount", "transaction_fee",
-                "transaction_timestamp", "transaction_type", "status");
+        return List.of("source_card_number", "destination_card_number", "amount", "fee",
+                "timestamp", "type", "status");
     }
 
     @Override
@@ -61,8 +61,8 @@ public class TransactionRepositoryImp
 
     @Override
     protected List<String> getUpdateColumns() {
-        return List.of("source_card_number", "destination_card_number", "amount", "transaction_fee",
-                "transaction_timestamp", "transaction_type", "status");
+        return List.of("source_card_number", "destination_card_number", "amount", "fee",
+                "timestamp", "type", "status");
     }
 
     @Override
@@ -89,9 +89,9 @@ public class TransactionRepositoryImp
             transaction.setSourceCardNumber(resultSet.getString("source_card_number"));
             transaction.setDestinationCardNumber(resultSet.getString("destination_card_number"));
             transaction.setAmount(resultSet.getDouble("amount"));
-            transaction.setTransactionFee(resultSet.getDouble("transaction_fee"));
-            transaction.setTransactionTimestamp(resultSet.getObject("transaction_timestamp", LocalDateTime.class));
-            transaction.setTransactionType(TransactionType.valueOf(resultSet.getString("transaction_type")));
+            transaction.setTransactionFee(resultSet.getDouble("fee"));
+            transaction.setTransactionTimestamp(resultSet.getObject("timestamp", LocalDateTime.class));
+            transaction.setTransactionType(TransactionType.valueOf(resultSet.getString("type")));
             transaction.setStatus(TransactionStatus.valueOf(resultSet.getString("status")));
             return transaction;
         } catch (SQLException e) {
@@ -134,7 +134,7 @@ public class TransactionRepositoryImp
 
     @Override
     public List<Transaction> findByTransactionType(TransactionType transactionType) {
-        String sql = "select * from transactions where transaction_type = ?";
+        String sql = "select * from transactions where type = ?";
         List<Transaction> result = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, transactionType.toString());
@@ -166,7 +166,7 @@ public class TransactionRepositoryImp
 
     @Override
     public List<Transaction> findByTransactionTimestamp(LocalDateTime transactionTimestamp) {
-        String sql = "select * from transactions where transaction_timestamp = ?";
+        String sql = "select * from transactions where timestamp = ?";
         List<Transaction> result = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setObject(1, transactionTimestamp);
