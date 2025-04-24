@@ -19,6 +19,8 @@ public class AccountRepository {
         accounts.remove(newAccount);
     }
 
+
+    //yek field unique set konim
     public void update(Account oldaccount, Account newAccount) {
         if (accounts.contains(oldaccount)) {
             accounts.set(accounts.indexOf(oldaccount), newAccount);

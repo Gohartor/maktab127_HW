@@ -24,7 +24,9 @@ public class App {
 
 
         List<Item> items1 = List.of(new Item("laptop", 1200.0), new Item("mouse", 25.0));
+
         List<Item> items2 = List.of(new Item("keyboard", 80.0), new Item("monitor", 300.0));
+
         List<Item> items3 = List.of(new Item("headphones", 150.0));
 
         List<Order> orders = List.of(
